@@ -33,7 +33,7 @@ export default class SpotifyFile {
             return music;
 
         } catch(e) {
-            console.error(e);
+            console.log(e);
         }
     }
 
@@ -61,7 +61,7 @@ export default class SpotifyFile {
         return music;
 
         }catch(e){
-            console.error(e)
+            console.log(e)
         }
 
     } 
@@ -76,7 +76,7 @@ export default class SpotifyFile {
             const filteredMusic = allMusic.filter(m => m.id !== id);
             this.save(filteredMusic);
         } catch(e) {
-            console.error(e)
+            console.log(e)
         }
     }
 
@@ -89,7 +89,7 @@ export default class SpotifyFile {
             const data = fs.readFileSync(this.filename, 'utf-8');
             return JSON.parse(data);
         } catch(e) {
-            console.error(e);
+            console.log(e);
         }
         
     }
@@ -101,7 +101,7 @@ export default class SpotifyFile {
         try {
             fs.writeFileSync(this.filename, JSON.stringify(spotify, null, 2));
         } catch(e) {
-            console.error(e)
+            console.log(e)
         }
 
     }

@@ -24,7 +24,7 @@ export default class MusicDb {
             return music;
 
         } catch(e) {
-            console.error(e);
+            console.log(e);
         }
     }
 
@@ -45,7 +45,7 @@ export default class MusicDb {
             return allMusic;
         } catch(e) {
             //show an error in the console
-            console.error(e.message)
+            console.log(e.message)
         }
     }
 
