@@ -5,7 +5,6 @@
 import Express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-import SpotifyFile from './lib/SpotifyFile.js';
 import registerMusicEndpoints from './actions/spotify/registerMusicEndpoints.js';
 
 // init dotenv
@@ -17,8 +16,6 @@ const app = Express();
 // add json body paser
 app.use(bodyParser.json());
 registerMusicEndpoints(app);
-
-const spotifyFile = new SpotifyFile();
 
 
 
