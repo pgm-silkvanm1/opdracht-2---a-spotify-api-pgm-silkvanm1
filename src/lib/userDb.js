@@ -24,7 +24,7 @@ export default class UserDb {
  */
   async update(name, username, email, admin){
     try {
-      return await knexMusic('user').where('userid', id).update({
+      return await knexMusic('user').where('userid', userid).update({
         userid: uuidv4(),
         name: name,
         username: username, 
@@ -41,7 +41,7 @@ export default class UserDb {
  */
   async delete(){
     try {
-      return await knexMusic('user').where('userid', id).del();
+      return await knexMusic('user').where('userid', userid).del();
     } catch(e) {
       console.error(e);
     }

@@ -4,7 +4,7 @@
 
 
 /**
- * Getting song
+ * Getting a song
  * @param {*} song 
  * @param {*} req
  * @param {*} res
@@ -18,9 +18,8 @@ export const getSongs = async (song, req, res) => {
   }
 };
 
-
 /**
- * Creates a new musicfile
+ * Creates a new song
  *
  * @param {*} song
  * @param {*} req
@@ -28,34 +27,37 @@ export const getSongs = async (song, req, res) => {
  */
 export const addSongs = async (song, req, res) => {
   try {
-    const newSong = await song.add(song);
-    res.status(200).json({ songs: newSong });
+    const { title, artist, uri}  = req.body;
+    const newSong = await song.add(title, artist, uri);
+    res.status(200).json(`created song : ${title}`);
   } catch({ message }) {
-    res.status(500);
-    res.json({ error: message });
+        response.status(500).json({ error: message });
+
+   
   }
 };
   
 /**
- * Update a new music item
+ * Update a song
  *
  * @param {*} song
  * @param {*} req
  * @param {*} res
  */
-export const updateSongs = async (song, req, res) => {
+export const updateSongs = async (songs, req, res) => {
   try {
-    const id = request.params.id;
-    const updatedSong = await song.update(id, song);
-    res.status(200).json({ songs: await updatedSong() });
+    const { song } = req.body;
+    const id = req.params.id;
+    const updatedSong = await songs.update(id, song);
+    res.status(200).json(`updated the ${song.title}`);
   } catch({ message }) {
-    res.status(500);
-    res.json({ error: message });
+    response.status(500).json({ error: message });
+
   }
 };
   
 /**
- * Delete a music item
+ * Delete a song
  *
  * @param {*} song
  * @param {*} req

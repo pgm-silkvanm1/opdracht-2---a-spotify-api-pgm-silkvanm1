@@ -4,7 +4,6 @@
 
 import knexMusic from '../../db/knexMusic.js';
 import { v4 as uuidv4 } from 'uuid';
-import knex from 'knex';
 
 export default class SongsDb {
 
@@ -13,13 +12,14 @@ export default class SongsDb {
  */
   async add(title, artist, uri) {
     try {
-      return await knexMusic('songs').insert({
-        songid: uuidv4(),
+      const song = await knexMusic('songs').insert({
+        id: uuidv4(),
         title: title,
         artist: artist, 
         uri: uri,
         createdAt: Date.now()
       });
+      return song;
     } catch(e) {
         console.error(e);
     }
@@ -28,26 +28,27 @@ export default class SongsDb {
 /**
  *  Update all songs from db table music
  */
-  async update(title, artist, uri){
-    try {
-      return await knexMusic('songs').where('songid', id).update({
-        songid: uuidv4(),
-        title: title,
-        artist:artist, 
-        uri: uri,
-        createdAt: Date.now()
-      })
-    } catch(e) {
-      console.error(e);
-    }
+
+ async update(id, song) {
+  try {
+    const updatedSong = await knexMusic('songs').where("id", id).update({ 
+      title: song.title, 
+      artist: song.title, 
+      uri: song.uri 
+    });
+     return updatedSong;
+  } catch(e) {
+    console.error(e.message);
   }
+}
+
 
 /**
  *  Delete all songs from db table music
  */
-  async delete(){
+  async delete(id){
     try {
-      return await knexMusic('songs').where('songid', id).del();
+      return await knexMusic('songs').where('id', id).del();
     } catch(e) {
       console.error(e);
     }
