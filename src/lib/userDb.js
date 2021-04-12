@@ -7,41 +7,42 @@ export default class UserDb {
  */
   async add(name, username, email, admin) {
     try {
-      return await knexMusic('user').insert({
-        userid: uuidv4(),
+      const user = await knexMusic('users').insert({
+        id: uuidv4(),
         name: name,
         username: username, 
         email: email,
         admin: admin
       });
-    } catch(e) {
-        console.error(e);
-    }
-  }
-
-/**
- *  Update user from db table user
- */
-  async update(name, username, email, admin){
-    try {
-      return await knexMusic('user').where('userid', userid).update({
-        userid: uuidv4(),
-        name: name,
-        username: username, 
-        email: email,
-        admin: admin
-      })
+      return user
     } catch(e) {
       console.error(e);
     }
   }
 
 /**
+ *  Update user from db table user
+ */
+  async update(id, user){
+    try {
+      const updatedUser = await knexMusic ('users').where("id", id).update({
+        name: user.name,
+        username: user.username, 
+        email: user.email,
+        admin: user.admin
+      })
+      return updatedUser;
+    } catch(e) {
+      console.error(e);
+    }
+  }
+  
+/**
  *  Delete user from db table user
  */
-  async delete(){
+  async delete(id){
     try {
-      return await knexMusic('user').where('userid', userid).del();
+      return await knexMusic('users').where('id', id).del();
     } catch(e) {
       console.error(e);
     }
@@ -52,7 +53,7 @@ export default class UserDb {
  */
   async get() {
     try {
-      return await knexMusic('user').select("*");
+      return await knexMusic('users').select("*");
     } catch(e) {
       console.error(e.message);
     }

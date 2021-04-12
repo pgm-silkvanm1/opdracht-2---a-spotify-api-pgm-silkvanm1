@@ -21,7 +21,7 @@ export default class SongsDb {
       });
       return song;
     } catch(e) {
-        console.error(e);
+      console.error(e);
     }
   }
 

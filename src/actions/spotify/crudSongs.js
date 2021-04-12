@@ -2,7 +2,6 @@
  * All crud operation actions together
  */
 
-
 /**
  * Getting a song
  * @param {*} song 
@@ -27,13 +26,11 @@ export const getSongs = async (song, req, res) => {
  */
 export const addSongs = async (song, req, res) => {
   try {
-    const { title, artist, uri}  = req.body;
+    const { title, artist, uri }  = req.body;
     const newSong = await song.add(title, artist, uri);
     res.status(200).json(`created song : ${title}`);
   } catch({ message }) {
-        response.status(500).json({ error: message });
-
-   
+    response.status(500).json({ error: message });
   }
 };
   
@@ -52,7 +49,6 @@ export const updateSongs = async (songs, req, res) => {
     res.status(200).json(`updated the ${song.title}`);
   } catch({ message }) {
     response.status(500).json({ error: message });
-
   }
 };
   
