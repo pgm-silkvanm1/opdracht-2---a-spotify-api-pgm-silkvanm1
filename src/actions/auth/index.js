@@ -1,11 +1,15 @@
+/* eslint-disable no-undef */
 import Express from 'express';
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import UserDb from '../../lib/userDb.js';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 
 const app = Express.Router();
 const userData = new UserDb();
-userData.findOne
+dotenv.config();
 
 const LocalStrategy = passportLocal.Strategy;
 
@@ -26,7 +30,7 @@ passport.use(new LocalStrategy({
         }
 
         // check on valid pass
-        if (user.password != password) {
+        if (!await isPasswordValid(password, user.password)) {
             return done(null, false, { message: 'password incorrect' });
         }
 
@@ -44,18 +48,39 @@ app.post('/login', (req, res) => {
         } else if(!user) {
             res.status(401).json(info);
         } else {
+            const token = jwt.sign(user, process.env.JWT_UNIQUE_KEY,{
+                expiresIn: parseInt(process.env.JWT_LIFETIME)
+            });
+
             res.status(200).json({
                 succes: true,
-                token: 'thisisareallyuniquetoken'
+                token: token,
+                user: {
+                    id: user.id,
+                    username: user.email
+                }
             });
         }
     }) (req, res);
 });
 
-app.post('/', (req, res) => {
+app.post('/hashpass', (req, res)=> {
+    bcrypt.hash(req.body.password, parseInt(process.env.BCRYPT_SALT_ROUNDS)).then(function(hash) {
+        res.status(200).send(hash);
+        // store hash in password db
+    });
+
+})
+
+app.get('/', (req, res) => {
     res.status(200).json({
         "message": "Everthing is just fine"
     });
 })
 
 export default app;
+
+const isPasswordValid = async (userPassword, dbPassword) => {
+    const match = await bcrypt.compare(userPassword, dbPassword);
+    return match;
+}
