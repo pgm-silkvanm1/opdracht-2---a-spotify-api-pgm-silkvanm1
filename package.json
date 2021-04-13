@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js --ignore 'data/*.*'",
-    "seed": "node ./src/seeder/index.js"
+    "seed": "node ./src/seeder/seeder.js"
   },
   "keywords": [],
   "author": "Silke Van Meerbeek",

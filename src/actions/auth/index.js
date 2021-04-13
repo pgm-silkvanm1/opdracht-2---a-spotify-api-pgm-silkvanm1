@@ -48,7 +48,16 @@ app.post('/login', (req, res) => {
         } else if(!user) {
             res.status(401).json(info);
         } else {
-            const token = jwt.sign(user, process.env.JWT_UNIQUE_KEY,{
+
+            //jwt token
+            const jwtData = {
+                id: user.id,
+                username: user.username,
+                email: user.email
+            }
+
+            // create and sign a jwt
+            const token = jwt.sign(jwtData, process.env.JWT_UNIQUE_KEY,{
                 expiresIn: parseInt(process.env.JWT_LIFETIME)
             });
 

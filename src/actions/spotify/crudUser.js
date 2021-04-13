@@ -28,9 +28,9 @@ export const addUser = async (user, req, res) => {
 try {
     const { name, username, email, admin }  = req.body;
     const newUser = await user.add(name, username, email, admin);
-    res.status(200).json(`created user : ${name}`);
+    res.status(200).json({user: newUser});
 } catch({ message }) {
-    response.status(500).json({ error: message });
+    res.status(500).json({ error: message });
 }
 };
 
@@ -46,7 +46,7 @@ export const updateUser = async (users, req, res) => {
         const { user } = req.body;
         const id = req.params.id;
         const updatedUser = await users.update(id, user);
-        res.status(200).json(`updated the ${user.name}`);
+        res.status(200).json({user: updatedUser});
     } catch({ message }) {
         res.status(500).json({ error: message });
 
