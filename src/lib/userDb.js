@@ -2,6 +2,16 @@ import knexMusic from '../../db/knexMusic.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default class UserDb {
+
+async findOne(username) {
+  try {
+    return await knexMusic('users').where({ username: username }).select('*').first();
+  } catch(e) {
+    console.error(e.message);
+  }
+}
+
+
 /**
  * Add user to the database
  */

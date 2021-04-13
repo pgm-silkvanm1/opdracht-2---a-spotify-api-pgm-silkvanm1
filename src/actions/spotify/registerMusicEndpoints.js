@@ -1,7 +1,7 @@
 /**
  * Register the endpoints
  */
-
+import Express from 'express';
 import * as crudSongs from './crudSongs.js';
 import * as crudUser from './crudUser.js';
 import * as crudPlaylist from './crudPlaylist.js';
@@ -11,8 +11,10 @@ import songsDb from '../../lib/songsDb.js';
 import UserDb from '../../lib/userDb.js';
 import playlistDb from '../../lib/playlistDb.js';
 
+const app = Express.Router();
 
-export default(app) => {
+
+// export default(app) => {
     const songdata = new songsDb();
     const userdata = new UserDb();
     const playlistdata = new playlistDb();
@@ -32,4 +34,5 @@ export default(app) => {
     app.put('/playlist/:id', (req, res) => crudPlaylist.updatePlaylist(playlistdata, req, res));
     app.delete('/playlist/:id', (req, res) => crudPlaylist.deletePlaylist(playlistdata, req, res));
 
-}
+export default app;
+// }
